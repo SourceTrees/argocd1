@@ -1,0 +1,258 @@
+#  *******************************************************************************
+#  Copyright (c) 2019 Contributors to the Eclipse Foundation
+#
+#  See the NOTICE file(s) distributed with this work for additional
+#  information regarding copyright ownership.
+#
+#  This program and the accompanying materials are made available under the
+#  terms of the Eclipse Public License v. 2.0 which is available at
+#  http://www.eclipse.org/legal/epl-2.0.
+#
+#  SPDX-License-Identifier: EPL-2.0
+#  *******************************************************************************
+backend-version: 2.2.0
+spring:
+  datasource:
+## -> Postgres Configuration
+    #url: jdbc:postgresql://192.168.49.2:30432/website
+    #username: website_user
+    #password: pass
+#    url: jdbc:postgresql://entopticadirx:5432/ContactBaseDataDevServer
+#    username: cbd_service
+#    password: cbd_service
+     url: jdbc:postgresql://${POSTGRES_HOST}/${POSTGRES_DB_NAME}
+     username: ${POSTGRES_DB_USER}
+     password: ${POSTGRES_DB_PASSWORD}
+## -> END: Postgres Configuration
+
+## -> Oracle Configuration
+#    enable-oracle-configuration: true
+#    url: jdbc:oracle:thin:@LIDLORADB2.PTA.DE:1521:NAPDB00
+#    username: dietricf
+#    password: dietricf000
+#  jpa:
+#    database-platform: org.hibernate.dialect.Oracle10gDialect
+#    show-sql: false
+## -> END: Oracle Configuration 1
+  flyway:
+    enabled: false
+  ldap:
+    base: o=sevenSeas
+    username: uid=admin,ou=system
+    password: secret
+    port: 10389
+    urls: ldap://entopkon:10389
+
+# oracle config --------------
+oracle:
+  ucp:
+    minPoolSize: 2
+    maxPoolSize: 10
+# -----------------------------
+
+ldap-sync:
+  attribute-mapping:
+    uid: uid
+    fullname: cn
+    lastname: sn
+    firstname: givenname
+    title: title
+    mail: mail
+    department: department
+    telephone-number: phone
+  db-id-mapping:
+    mail-id: 1
+    telephone-number-id: 2
+  scheduling:
+    enabled: false
+    cron-expression: '0 0 0 * * ?'
+
+authnauth-sync:
+  attribute-mapping:
+    lastname: true
+    firstname: true
+  scheduling:
+    enabled: false
+    cron-expression: '0 0 0 * * ?'
+  technical-username: admin
+  technical-userpassword: admin
+
+server:
+  port: 9155
+  max-http-header-size: 262144
+
+jwt:
+  tokenHeader: Authorization
+  useStaticJwt: false
+  staticJwt: eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJIYlI3Z2pobmE2eXJRZnZJTWhUSV9tY2g3ZmtTQWVFX3hLTjBhZVl0bjdjIn0.eyJqdGkiOiI5MGI0NGFkOC1iYjlmLTQ1MzktYTQwYy0yYjQyZTNkNjNiOGEiLCJleHAiOjE1Nzg2NTU3OTUsIm5iZiI6MCwiaWF0IjoxNTc4NjU1NDk1LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvYXV0aC9yZWFsbXMvRWxvZ2Jvb2siLCJhdWQiOiJlbG9nYm9vay1iYWNrZW5kIiwic3ViIjoiODYyNjY5NmYtZjFhMi00ZGI1LTkyZWYtZTlhMjQ2Njg1YTU0IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiZWxvZ2Jvb2stYmFja2VuZCIsImF1dGhfdGltZSI6MCwic2Vzc2lvbl9zdGF0ZSI6IjJmMWIzODE5LWZjNjQtNDEzNC1iNWQxLWY3ZWY4NzU5NDBkNCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsia29uLWFkbWluIiwia29uLXdyaXRlciIsImtvbi1hY2Nlc3MiLCJrb24tcmVhZGVyIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnt9LCJuYW1lIjoiVGVzdGVyRmlyc3RuYW1lX3J3YSBUZXN0ZXJMYXN0bmFtZV9yd2EiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ0ZXN0dXNlcl9yd2EiLCJnaXZlbl9uYW1lIjoiVGVzdGVyRmlyc3RuYW1lX3J3YSIsImZhbWlseV9uYW1lIjoiVGVzdGVyTGFzdG5hbWVfcndhIn0.DAYXuv4tKn8RXqO1jyttnD-tF4nShUBQyfe4bKbAiPAyY2x5YbAf3M4eXnLrGqo8-loGKldICC28bL0LaMA3KKkQEOfW5sfpGqoN6212vs89mOklt0TJYc5PMXwFgJ5WC_TKjdwq7-aaDafOEWehV0U1ut3s-94ovNYIEn29nzXm2W1ldoXJEq03F880jlysQ5zlRvGF7eXEEpFfI2URyyNQ2UWh0Ssfq-gOAt2pbF1u6prA5RfvUmZ3v1eu21YLGZtgqPqxb1l6odyH3ip15j_HdgnTeo52ymxuRUj65Mskme3V5ev2DitHI9vZgnpV8Idhb4TTWliBeGCOMfDFCg
+
+services:
+  authNAuth:
+    name: authNAuthService
+
+authNAuthService:
+  ribbon:
+    listOfServers: http://portal-service:80
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 60000
+        readTimeout: 60000
+cors:
+  corsEnabled: false
+
+---
+
+spring:
+  profiles: test
+
+  datasource:
+    enable-oracle-configuration: false
+    url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1
+  jpa:
+    database-platform:
+    hibernate:
+   #   ddl-auto: create
+    show-sql: false
+
+  flyway:
+    enabled: false
+
+ldap-sync:
+  scheduling:
+    enabled: false
+
+jwt:
+  tokenHeader: Authorization
+  useStaticJwt: true
+  staticJwt: eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJIYlI3Z2pobmE2eXJRZnZJTWhUSV9tY2g3ZmtTQWVFX3hLTjBhZVl0bjdjIn0.eyJqdGkiOiI5MGI0NGFkOC1iYjlmLTQ1MzktYTQwYy0yYjQyZTNkNjNiOGEiLCJleHAiOjE1Nzg2NTU3OTUsIm5iZiI6MCwiaWF0IjoxNTc4NjU1NDk1LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvYXV0aC9yZWFsbXMvRWxvZ2Jvb2siLCJhdWQiOiJlbG9nYm9vay1iYWNrZW5kIiwic3ViIjoiODYyNjY5NmYtZjFhMi00ZGI1LTkyZWYtZTlhMjQ2Njg1YTU0IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiZWxvZ2Jvb2stYmFja2VuZCIsImF1dGhfdGltZSI6MCwic2Vzc2lvbl9zdGF0ZSI6IjJmMWIzODE5LWZjNjQtNDEzNC1iNWQxLWY3ZWY4NzU5NDBkNCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsia29uLWFkbWluIiwia29uLXdyaXRlciIsImtvbi1hY2Nlc3MiLCJrb24tcmVhZGVyIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnt9LCJuYW1lIjoiVGVzdGVyRmlyc3RuYW1lX3J3YSBUZXN0ZXJMYXN0bmFtZV9yd2EiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ0ZXN0dXNlcl9yd2EiLCJnaXZlbl9uYW1lIjoiVGVzdGVyRmlyc3RuYW1lX3J3YSIsImZhbWlseV9uYW1lIjoiVGVzdGVyTGFzdG5hbWVfcndhIn0.DAYXuv4tKn8RXqO1jyttnD-tF4nShUBQyfe4bKbAiPAyY2x5YbAf3M4eXnLrGqo8-loGKldICC28bL0LaMA3KKkQEOfW5sfpGqoN6212vs89mOklt0TJYc5PMXwFgJ5WC_TKjdwq7-aaDafOEWehV0U1ut3s-94ovNYIEn29nzXm2W1ldoXJEq03F880jlysQ5zlRvGF7eXEEpFfI2URyyNQ2UWh0Ssfq-gOAt2pbF1u6prA5RfvUmZ3v1eu21YLGZtgqPqxb1l6odyH3ip15j_HdgnTeo52ymxuRUj65Mskme3V5ev2DitHI9vZgnpV8Idhb4TTWliBeGCOMfDFCg
+
+---
+
+spring:
+  profiles: devserver-local
+
+jwt:
+  tokenHeader: Authorization
+  useStaticJwt: true
+  staticJwt: eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJIYlI3Z2pobmE2eXJRZnZJTWhUSV9tY2g3ZmtTQWVFX3hLTjBhZVl0bjdjIn0.eyJqdGkiOiI5MGI0NGFkOC1iYjlmLTQ1MzktYTQwYy0yYjQyZTNkNjNiOGEiLCJleHAiOjE1Nzg2NTU3OTUsIm5iZiI6MCwiaWF0IjoxNTc4NjU1NDk1LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvYXV0aC9yZWFsbXMvRWxvZ2Jvb2siLCJhdWQiOiJlbG9nYm9vay1iYWNrZW5kIiwic3ViIjoiODYyNjY5NmYtZjFhMi00ZGI1LTkyZWYtZTlhMjQ2Njg1YTU0IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiZWxvZ2Jvb2stYmFja2VuZCIsImF1dGhfdGltZSI6MCwic2Vzc2lvbl9zdGF0ZSI6IjJmMWIzODE5LWZjNjQtNDEzNC1iNWQxLWY3ZWY4NzU5NDBkNCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsia29uLWFkbWluIiwia29uLXdyaXRlciIsImtvbi1hY2Nlc3MiLCJrb24tcmVhZGVyIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnt9LCJuYW1lIjoiVGVzdGVyRmlyc3RuYW1lX3J3YSBUZXN0ZXJMYXN0bmFtZV9yd2EiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ0ZXN0dXNlcl9yd2EiLCJnaXZlbl9uYW1lIjoiVGVzdGVyRmlyc3RuYW1lX3J3YSIsImZhbWlseV9uYW1lIjoiVGVzdGVyTGFzdG5hbWVfcndhIn0.DAYXuv4tKn8RXqO1jyttnD-tF4nShUBQyfe4bKbAiPAyY2x5YbAf3M4eXnLrGqo8-loGKldICC28bL0LaMA3KKkQEOfW5sfpGqoN6212vs89mOklt0TJYc5PMXwFgJ5WC_TKjdwq7-aaDafOEWehV0U1ut3s-94ovNYIEn29nzXm2W1ldoXJEq03F880jlysQ5zlRvGF7eXEEpFfI2URyyNQ2UWh0Ssfq-gOAt2pbF1u6prA5RfvUmZ3v1eu21YLGZtgqPqxb1l6odyH3ip15j_HdgnTeo52ymxuRUj65Mskme3V5ev2DitHI9vZgnpV8Idhb4TTWliBeGCOMfDFCg
+
+
+ldap-sync:
+  attribute-mapping:
+    uid: uid
+    fullname: cn
+    lastname: sn
+    firstname: givenname
+    title: title
+    mail: mail
+    department: department
+    telephone-number: phone
+  db-id-mapping:
+    mail-id: 1
+    telephone-number-id: 2
+  scheduling:
+    enabled: true
+    cron-expression: '*/10 * * * * *'
+
+authnauth-sync:
+  attribute-mapping:
+    lastname: true
+    firstname: true
+  scheduling:
+    enabled: false
+    cron-expression: '*/12 * * * * *'
+  technical-username: admin
+  technical-userpassword: admin
+
+server:
+  port: 9155
+
+cors:
+  corsEnabled: true
+
+authNAuthService:
+  ribbon:
+    listOfServers: http://localhost:8080
+
+---
+
+spring:
+  profiles: devserver
+
+ldap-sync:
+  scheduling:
+    enabled: true
+
+jwt:
+  tokenHeader: Authorization
+  useStaticJwt: false
+  staticJwt: eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJIYlI3Z2pobmE2eXJRZnZJTWhUSV9tY2g3ZmtTQWVFX3hLTjBhZVl0bjdjIn0.eyJqdGkiOiI5MGI0NGFkOC1iYjlmLTQ1MzktYTQwYy0yYjQyZTNkNjNiOGEiLCJleHAiOjE1Nzg2NTU3OTUsIm5iZiI6MCwiaWF0IjoxNTc4NjU1NDk1LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvYXV0aC9yZWFsbXMvRWxvZ2Jvb2siLCJhdWQiOiJlbG9nYm9vay1iYWNrZW5kIiwic3ViIjoiODYyNjY5NmYtZjFhMi00ZGI1LTkyZWYtZTlhMjQ2Njg1YTU0IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiZWxvZ2Jvb2stYmFja2VuZCIsImF1dGhfdGltZSI6MCwic2Vzc2lvbl9zdGF0ZSI6IjJmMWIzODE5LWZjNjQtNDEzNC1iNWQxLWY3ZWY4NzU5NDBkNCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsia29uLWFkbWluIiwia29uLXdyaXRlciIsImtvbi1hY2Nlc3MiLCJrb24tcmVhZGVyIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnt9LCJuYW1lIjoiVGVzdGVyRmlyc3RuYW1lX3J3YSBUZXN0ZXJMYXN0bmFtZV9yd2EiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ0ZXN0dXNlcl9yd2EiLCJnaXZlbl9uYW1lIjoiVGVzdGVyRmlyc3RuYW1lX3J3YSIsImZhbWlseV9uYW1lIjoiVGVzdGVyTGFzdG5hbWVfcndhIn0.DAYXuv4tKn8RXqO1jyttnD-tF4nShUBQyfe4bKbAiPAyY2x5YbAf3M4eXnLrGqo8-loGKldICC28bL0LaMA3KKkQEOfW5sfpGqoN6212vs89mOklt0TJYc5PMXwFgJ5WC_TKjdwq7-aaDafOEWehV0U1ut3s-94ovNYIEn29nzXm2W1ldoXJEq03F880jlysQ5zlRvGF7eXEEpFfI2URyyNQ2UWh0Ssfq-gOAt2pbF1u6prA5RfvUmZ3v1eu21YLGZtgqPqxb1l6odyH3ip15j_HdgnTeo52ymxuRUj65Mskme3V5ev2DitHI9vZgnpV8Idhb4TTWliBeGCOMfDFCg
+
+server:
+  port: 9155
+
+cors:
+  corsEnabled: true
+
+
+---
+
+spring:
+  profiles: devserver-unsecure
+
+ldap-sync:
+  scheduling:
+    enabled: true
+
+jwt:
+  tokenHeader: Authorization
+  useStaticJwt: true
+  staticJwt: eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJIYlI3Z2pobmE2eXJRZnZJTWhUSV9tY2g3ZmtTQWVFX3hLTjBhZVl0bjdjIn0.eyJqdGkiOiI5MGI0NGFkOC1iYjlmLTQ1MzktYTQwYy0yYjQyZTNkNjNiOGEiLCJleHAiOjE1Nzg2NTU3OTUsIm5iZiI6MCwiaWF0IjoxNTc4NjU1NDk1LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvYXV0aC9yZWFsbXMvRWxvZ2Jvb2siLCJhdWQiOiJlbG9nYm9vay1iYWNrZW5kIiwic3ViIjoiODYyNjY5NmYtZjFhMi00ZGI1LTkyZWYtZTlhMjQ2Njg1YTU0IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiZWxvZ2Jvb2stYmFja2VuZCIsImF1dGhfdGltZSI6MCwic2Vzc2lvbl9zdGF0ZSI6IjJmMWIzODE5LWZjNjQtNDEzNC1iNWQxLWY3ZWY4NzU5NDBkNCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsia29uLWFkbWluIiwia29uLXdyaXRlciIsImtvbi1hY2Nlc3MiLCJrb24tcmVhZGVyIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnt9LCJuYW1lIjoiVGVzdGVyRmlyc3RuYW1lX3J3YSBUZXN0ZXJMYXN0bmFtZV9yd2EiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ0ZXN0dXNlcl9yd2EiLCJnaXZlbl9uYW1lIjoiVGVzdGVyRmlyc3RuYW1lX3J3YSIsImZhbWlseV9uYW1lIjoiVGVzdGVyTGFzdG5hbWVfcndhIn0.DAYXuv4tKn8RXqO1jyttnD-tF4nShUBQyfe4bKbAiPAyY2x5YbAf3M4eXnLrGqo8-loGKldICC28bL0LaMA3KKkQEOfW5sfpGqoN6212vs89mOklt0TJYc5PMXwFgJ5WC_TKjdwq7-aaDafOEWehV0U1ut3s-94ovNYIEn29nzXm2W1ldoXJEq03F880jlysQ5zlRvGF7eXEEpFfI2URyyNQ2UWh0Ssfq-gOAt2pbF1u6prA5RfvUmZ3v1eu21YLGZtgqPqxb1l6odyH3ip15j_HdgnTeo52ymxuRUj65Mskme3V5ev2DitHI9vZgnpV8Idhb4TTWliBeGCOMfDFCg
+
+server:
+  port: 9156
+
+cors:
+  corsEnabled: true
+
+---
+
+spring:
+  profiles: qserver
+  datasource:
+    enable-oracle-configuration: false
+    url: jdbc:postgresql://localhost:5432/contactBaseDataQa
+    username: cbd_service
+    password: cbd_service
+  flyway:
+    enabled: false
+
+ldap-sync:
+  scheduling:
+    enabled: false
+
+server:
+  port: 9155
+  max-http-header-size: 262144
+  servlet:
+    session:
+      tracking-modes: cookie
+
+jwt:
+  tokenHeader: Authorization
+  useStaticJwt: false
+  staticJwt: eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJIYlI3Z2pobmE2eXJRZnZJTWhUSV9tY2g3ZmtTQWVFX3hLTjBhZVl0bjdjIn0.eyJqdGkiOiI5MGI0NGFkOC1iYjlmLTQ1MzktYTQwYy0yYjQyZTNkNjNiOGEiLCJleHAiOjE1Nzg2NTU3OTUsIm5iZiI6MCwiaWF0IjoxNTc4NjU1NDk1LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvYXV0aC9yZWFsbXMvRWxvZ2Jvb2siLCJhdWQiOiJlbG9nYm9vay1iYWNrZW5kIiwic3ViIjoiODYyNjY5NmYtZjFhMi00ZGI1LTkyZWYtZTlhMjQ2Njg1YTU0IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiZWxvZ2Jvb2stYmFja2VuZCIsImF1dGhfdGltZSI6MCwic2Vzc2lvbl9zdGF0ZSI6IjJmMWIzODE5LWZjNjQtNDEzNC1iNWQxLWY3ZWY4NzU5NDBkNCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsia29uLWFkbWluIiwia29uLXdyaXRlciIsImtvbi1hY2Nlc3MiLCJrb24tcmVhZGVyIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnt9LCJuYW1lIjoiVGVzdGVyRmlyc3RuYW1lX3J3YSBUZXN0ZXJMYXN0bmFtZV9yd2EiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ0ZXN0dXNlcl9yd2EiLCJnaXZlbl9uYW1lIjoiVGVzdGVyRmlyc3RuYW1lX3J3YSIsImZhbWlseV9uYW1lIjoiVGVzdGVyTGFzdG5hbWVfcndhIn0.DAYXuv4tKn8RXqO1jyttnD-tF4nShUBQyfe4bKbAiPAyY2x5YbAf3M4eXnLrGqo8-loGKldICC28bL0LaMA3KKkQEOfW5sfpGqoN6212vs89mOklt0TJYc5PMXwFgJ5WC_TKjdwq7-aaDafOEWehV0U1ut3s-94ovNYIEn29nzXm2W1ldoXJEq03F880jlysQ5zlRvGF7eXEEpFfI2URyyNQ2UWh0Ssfq-gOAt2pbF1u6prA5RfvUmZ3v1eu21YLGZtgqPqxb1l6odyH3ip15j_HdgnTeo52ymxuRUj65Mskme3V5ev2DitHI9vZgnpV8Idhb4TTWliBeGCOMfDFCg
+
+services:
+  authNAuth:
+    name: authNAuthService
+
+authNAuthService:
+  ribbon:
+    listOfServers: http://localhost:8080
+
+cors:
+  corsEnabled: true

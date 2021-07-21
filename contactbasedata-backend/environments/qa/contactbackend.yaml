@@ -1,0 +1,34 @@
+--- 
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: contact-be-deployment
+spec: 
+  selector: 
+    matchLabels: 
+      app: contact-be-container
+  template: 
+    metadata: 
+      labels: 
+        app: contact-be-container
+    spec: 
+      containers: 
+        - image: "contactbasedata-backend:1.0"
+          imagePullPolicy: Never
+          name: contact-be-container
+          ports:
+            - containerPort: 9155
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: contact-be-service
+spec:
+  selector:
+    app: contact-be-container
+  #type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 9155
+      targetPort: 9155
+      #nodePort: 30155

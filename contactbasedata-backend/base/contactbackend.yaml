@@ -1,0 +1,58 @@
+--- 
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: contact-be-deployment
+spec: 
+  selector: 
+    matchLabels: 
+      app: contact-be-container
+  template: 
+    metadata: 
+      labels: 
+        app: contact-be-container
+    spec: 
+      containers: 
+        - image: "contactbasedata-backend:1.0"
+          imagePullPolicy: Never
+          name: contact-be-container
+          env:
+            - name: POSTGRES_DB_USER
+              value: website_user
+            - name: POSTGRES_DB_PASSWORD
+              value: pass
+            - name: SPRING_CONFIG_LOCATION
+              value: "file:/config/"
+            - name: spring.datasource.url2
+              value: "jdbc:postgresql://192.168.49.2:30432/website"
+            - name: POSTGRES_SERVICE
+              value: postgres-service
+            - name: POSTGRES_DB_NAME
+              value: website
+          ports:
+            - containerPort: 9155
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config/              
+              readOnly: true
+      volumes:
+        - name: config-volume
+          configMap:
+            name: contact-be-config
+            items:
+            - key: application.yml
+              path: application_localdev.yml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: contact-be-service
+spec:
+  selector:
+    app: contact-be-container
+  #type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 9155
+      targetPort: 9155
+      #nodePort: 30155

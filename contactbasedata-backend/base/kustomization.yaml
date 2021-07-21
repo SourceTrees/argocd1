@@ -1,0 +1,3 @@
+resources:
+  - contactbackend.yaml
+  #- contact-be-configmap.yaml
