@@ -13,8 +13,7 @@ spec:
         app: contact-be-container
     spec: 
       containers: 
-        - image: "contactbasedata-backend:1.0"
-          imagePullPolicy: Never
+        - image: "registry.gitlab.com/openkonsequenz/qa/contactbasedata-backend:develop"
           name: contact-be-container
           ports:
             - containerPort: 9155
