@@ -17,8 +17,8 @@ spec:
       project: default
       destination:
         namespace: ok-pta-qa-modules
-        server: {{ .Values.spec.destination.server }}    
+        server: https://kubernetes.default.svc    
       source:
         path: contactbasedata-backend/environments/{{cluster}}/
-        repoURL: {{ .Values.spec.source.repoURL }}
-        targetRevision: {{ .Values.spec.source.targetRevision }}
+        repoURL: https://github.com/SourceTrees/argocd1
+        targetRevision: HEAD
