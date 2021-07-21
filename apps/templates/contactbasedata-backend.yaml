@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: contactbasedata-backend
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: qa
+        url: https://1.2.3.4
+      - cluster: dev
+        url: https://2.4.6.8
+  template:
+    metadata:
+      name: '{{cluster}}-guestbook'
+    spec:
+      project: default
+      destination:
+        namespace: ok-pta-qa-modules
+        server: {{ .Values.spec.destination.server }}    
+      source:
+        path: contactbasedata-backend/environments/{{cluster}}/
+        repoURL: {{ .Values.spec.source.repoURL }}
+        targetRevision: {{ .Values.spec.source.targetRevision }}
