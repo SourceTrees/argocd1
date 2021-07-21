@@ -12,7 +12,7 @@ spec:
         url: https://2.4.6.8
   template:
     metadata:
-      name: '{{cluster}}-guestbook'
+      name: contactbasedata-backend
     spec:
       project: default
       destination:
