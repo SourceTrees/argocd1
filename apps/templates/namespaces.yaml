@@ -4,3 +4,17 @@ metadata:
   name: ok-pta-qa-modules
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: qa
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"

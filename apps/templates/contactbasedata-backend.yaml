@@ -1,24 +1,23 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: contactbasedata-backend
+  name: cluster-addons
 spec:
   generators:
-  - list:
-      elements:
-      - cluster: qa
-        url: https://1.2.3.4
-      - cluster: dev
-        url: https://2.4.6.8
+  - git:
+      repoURL: https://github.com/SourceTrees/argocd1.git
+      revision: HEAD
+      directories:
+      - path: argocd1/contactbasedata-backend/environments/*
   template:
     metadata:
-      name: '{{cluster}}-guestbook'
+      name: contactbasedata-backend
     spec:
       project: default
-      destination:
-        namespace: ok-pta-qa-modules
-        server: {{ .Values.spec.destination.server }}    
       source:
-        path: contactbasedata-backend/environments/{{cluster}}/
-        repoURL: {{ .Values.spec.source.repoURL }}
-        targetRevision: {{ .Values.spec.source.targetRevision }}
+        repoURL: https://github.com/SourceTrees/argocd1.git
+        targetRevision: HEAD
+        path: '{{path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{path.basename}}'

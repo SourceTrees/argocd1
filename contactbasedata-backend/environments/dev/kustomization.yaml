@@ -1,0 +1,11 @@
+bases:
+  - ../../base
+patches:
+  #- contact-be-configmap.yaml
+  - contactbackend.yaml
+configMapGenerator:
+  - name: contact-be-config
+    namespace: dev
+    #behavior: replace
+    files:
+      - configs/application.yml
