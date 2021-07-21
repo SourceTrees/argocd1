@@ -5,7 +5,7 @@ patches:
   - contactbackend.yaml
 configMapGenerator:
   - name: contact-be-config
-    namespace: default
+    namespace: ok-pta-qa-modules
     #behavior: replace
     files:
       - configs/application.yml
