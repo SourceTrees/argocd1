@@ -2,7 +2,7 @@ bases:
   - ../../base
 patches:
   #- contact-be-configmap.yaml
-  - contactbackend.yaml
+  - contact-be-deployment
 configMapGenerator:
   - name: contact-be-config
     namespace: ok-pta-qa-modules

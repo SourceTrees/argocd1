@@ -50,7 +50,7 @@ spec:
             echo Job finished;        
         - name: schema-migration
           image: registry.gitlab.com/openkonsequenz/qa/contactbasedata-backend:1.0.0-flyway
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: FLYWAY_URL
               value: jdbc:postgresql://postgresql-svc.ok-pta-shared.svc.cluster.local:5432/ContactBaseDataQa
@@ -63,7 +63,7 @@ spec:
                   key: POSTGRES_DB_PASSWORD          
           command: ["flyway", "info" ,"migrate", "info"]
       containers: 
-        - image: "registry.gitlab.com/openkonsequenz/qa/contactbasedata-backend:develop"
+        - image: "registry.gitlab.com/openkonsequenz/qa/contactbasedata-backend:develop"                  
           name: contact-be-container
           env:
             - name: SPRING_CONFIG_LOCATION

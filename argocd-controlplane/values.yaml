@@ -1,0 +1,14 @@
+apps:
+  - name: contactbasedata-backend
+    destNamespace: ok-pta-qa-modules
+    path: apps/contactbasedata/contactbasedata-backend/environments/qa/
+  # - name: contactbasedata-backend
+  #   destNamespace: ok-pta-qa-modules
+  #   path: contactbasedata-backend/environments/dev/
+
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://github.com/SourceTrees/argocd1
+    targetRevision: HEAD
