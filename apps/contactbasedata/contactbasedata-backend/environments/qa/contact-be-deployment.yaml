@@ -63,7 +63,8 @@ spec:
                   key: POSTGRES_DB_PASSWORD          
           command: ["flyway", "info" ,"migrate", "info"]
       containers: 
-        - image: "registry.gitlab.com/openkonsequenz/qa/contactbasedata-backend:develop"                  
+        - image: "registry.gitlab.com/openkonsequenz/qa/contactbasedata-backend:develop"       
+          imagePullPolicy: Always           
           name: contact-be-container
           env:
             - name: SPRING_CONFIG_LOCATION
