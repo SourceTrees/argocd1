@@ -1,4 +1,7 @@
 apps:
+  - name: init
+    destNamespace: default
+    path: shared/
   - name: contactbasedata-backend
     destNamespace: ok-pta-qa-modules
     path: apps/contactbasedata/contactbasedata-backend/environments/qa/
