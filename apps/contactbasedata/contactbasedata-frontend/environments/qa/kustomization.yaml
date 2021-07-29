@@ -1,0 +1,11 @@
+bases:
+  - ../../base
+patches:
+  #- contact-be-configmap.yaml
+  - contact-fe-deployment.yaml
+configMapGenerator:
+  - name: contact-fe-config
+    namespace: ok-pta-qa-modules
+    #behavior: replace
+    files:
+      - configs/development.json

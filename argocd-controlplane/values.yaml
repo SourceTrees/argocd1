@@ -5,6 +5,9 @@ apps:
   # - name: contactbasedata-backend
   #   destNamespace: ok-pta-qa-modules
   #   path: contactbasedata-backend/environments/dev/
+  - name: contactbasedata-frontend
+    destNamespace: ok-pta-qa-modules
+    path: apps/contactbasedata/contactbasedata-frontend/environments/qa/
 
 spec:
   destination:
