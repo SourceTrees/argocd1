@@ -4,11 +4,11 @@ kind: Application
 metadata:
   name: {{ .name }}
   namespace: argocd
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
+  #finalizers:
+  #- resources-finalizer.argocd.argoproj.io
   annotations:
     #argocd.argoproj.io/hook: {{ .syncHook | default "Sync" | quote }}
-    #argocd.argoproj.io/sync-wave: {{ .syncWave | default "0" | quote }}  
+    argocd.argoproj.io/sync-wave: {{ .syncWave | default "0" | quote }}  
 spec:
   destination:
     namespace: {{ .destNamespace }}
