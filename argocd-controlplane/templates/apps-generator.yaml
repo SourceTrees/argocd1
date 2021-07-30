@@ -20,10 +20,10 @@ spec:
     repoURL: {{ $.Values.spec.source.repoURL }}
     targetRevision: {{ $.Values.spec.source.targetRevision }}
   syncPolicy:
-    #automated:
-    #  selfHeal: false
-    #  prune: false
-    #  allowEmpty: true
+    automated:
+      selfHeal: false
+      prune: false
+      allowEmpty: true
     #syncOptions:
     #  - CreateNamespace=true
 ---
