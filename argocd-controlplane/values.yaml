@@ -3,11 +3,11 @@ namespaces:
   - name: ok-pta-shared
   - name: traefik
 apps:
-  # - name: init
-  #   destNamespace: default
-  #   syncWave: -2
-  #   syncHook: PreSync
-  #   path: shared/    
+  - name: init
+    destNamespace: default
+    syncWave: -2
+    syncHook: PreSync
+    path: shared/    
   - name: contactbasedata-backend
     destNamespace: ok-pta-qa-modules        
     syncWave: 1
