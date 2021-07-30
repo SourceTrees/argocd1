@@ -19,8 +19,8 @@ spec:
     targetRevision: {{ $.Values.spec.source.targetRevision }}
   syncPolicy:
     automated:
-      selfHeal: false
-      prune: false
+      #selfHeal: false
+      #prune: false
       allowEmpty: true
     #syncOptions:
     #  - CreateNamespace=true
