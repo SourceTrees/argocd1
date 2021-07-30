@@ -5,7 +5,7 @@ namespaces:
 apps:
   - name: init
     destNamespace: default
-    syncWave: -1
+    syncWave: -2
     syncHook: PreSync
     path: shared/    
   - name: contactbasedata-backend
