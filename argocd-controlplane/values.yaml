@@ -1,3 +1,7 @@
+namespaces:
+  - name: ok-pta-qa-modules
+  - name: ok-pta-shared
+  - name: traefik
 apps:
   - name: init
     destNamespace: default

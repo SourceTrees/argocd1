@@ -1,0 +1,11 @@
+{{- range .Values.namespaces }}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .name }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+---
+{{- end }}
