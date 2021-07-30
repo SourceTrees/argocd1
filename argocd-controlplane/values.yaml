@@ -5,15 +5,19 @@ namespaces:
 apps:
   - name: init
     destNamespace: default
-    path: shared/
+    syncWave: -1
+    syncHook: PreSync
+    path: shared/    
   - name: contactbasedata-backend
-    destNamespace: ok-pta-qa-modules
+    destNamespace: ok-pta-qa-modules        
+    syncWave: 1
     path: apps/contactbasedata/contactbasedata-backend/environments/qa/
   # - name: contactbasedata-backend
   #   destNamespace: ok-pta-qa-modules
   #   path: contactbasedata-backend/environments/dev/
   - name: contactbasedata-frontend
     destNamespace: ok-pta-qa-modules
+    syncWave: 2
     path: apps/contactbasedata/contactbasedata-frontend/environments/qa/
 
 spec:
