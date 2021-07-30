@@ -9,7 +9,7 @@ metadata:
   annotations:
     #argocd.argoproj.io/hook: {{ .syncHook | default "Sync" | quote }}
     #argocd.argoproj.io/hook: "PreSync"
-    #argocd.argoproj.io/sync-wave: {{ .syncWave | default "0" | quote }}  
+    argocd.argoproj.io/sync-wave: {{ .syncWave | default "0" | quote }}
 spec:
   destination:
     namespace: {{ .destNamespace }}
@@ -20,6 +20,10 @@ spec:
     repoURL: {{ $.Values.spec.source.repoURL }}
     targetRevision: {{ $.Values.spec.source.targetRevision }}
   syncPolicy:
+    automated:
+      selfHeal: false
+      prune: false
+      allowEmpty: true
     syncOptions:
       - CreateNamespace=true
 ---
