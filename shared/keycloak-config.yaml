@@ -30,3 +30,5 @@ metadata:
   creationTimestamp: null
   name: keycloak-config
   namespace: ok-pta-qa-modules
+  annotations:
+    argocd.argoproj.io/sync-wave: "-5"
