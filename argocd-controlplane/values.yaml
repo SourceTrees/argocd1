@@ -15,10 +15,10 @@ apps:
   # - name: contactbasedata-backend
   #   destNamespace: ok-pta-qa-modules
   #   path: contactbasedata-backend/environments/dev/
-  - name: contactbasedata-frontend
-    destNamespace: ok-pta-qa-modules
-    syncWave: 1
-    path: apps/contactbasedata/contactbasedata-frontend/environments/qa/
+  # - name: contactbasedata-frontend
+  #   destNamespace: ok-pta-qa-modules
+  #   syncWave: 1
+  #   path: apps/contactbasedata/contactbasedata-frontend/environments/qa/
 
 spec:
   destination:
