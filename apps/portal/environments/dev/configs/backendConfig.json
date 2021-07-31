@@ -1,0 +1,10 @@
+{
+  "internalSessionLengthMillis": 3600000,
+  "reloadUsersInSec": 300,
+  "authServerUrl": "http://keycloak-service.ok-pta-shared.svc.cluster.local:8080/",
+  "keycloakRealm": "Elogbook",
+  "keycloakClient": "elogbook-backend",
+  "keycloakAdmin": "admin",
+  "keycloakPW": "admin",
+  "maxLoadUsers": 1000
+}

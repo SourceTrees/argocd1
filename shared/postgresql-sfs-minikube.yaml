@@ -3,6 +3,8 @@ kind: StatefulSet
 metadata:
   name: postgresql-sfs
   namespace: ok-pta-shared
+  annotations:
+    argocd.argoproj.io/sync-wave: "-4" 
 spec:
   selector:
     matchLabels:

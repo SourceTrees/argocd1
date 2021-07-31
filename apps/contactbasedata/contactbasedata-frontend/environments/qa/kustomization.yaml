@@ -1,11 +1,16 @@
-bases:
-  - ../../base
-patches:
-  #- contact-be-configmap.yaml
-  - contact-fe-deployment.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../../base
+
+namespace: ok-pta-qa-modules
+
+images:
+  - name: registry.gitlab.com/openkonsequenz/qa/contactbasedata-frontend:latest
+    newName: registry.gitlab.com/openkonsequenz/qa/contactbasedata-frontend:latest
+
 configMapGenerator:
-  - name: contact-fe-config
-    namespace: ok-pta-qa-modules
-    #behavior: replace
+  - name: contact-fe-config   
     files:
       - configs/development.json

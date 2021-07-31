@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: phpldapadmin-deployment
+  namespace: ok-pta-shared
+spec: 
+  selector: 
+    matchLabels: 
+      app: phpldapadmin-container
+  template: 
+    metadata: 
+      labels: 
+        app: phpldapadmin-container
+    spec:
+      containers: 
+        - image: osixia/phpldapadmin:0.9.0
+          name: phpldapadmin-container
+          env:
+            - name: PHPLDAPADMIN_LDAP_HOSTS
+              value: open-ldap-service 
+            - name: PHPLDAPADMIN_HTTPS
+              value: 'false'  
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: phpldapadmin-service
+  namespace: ok-pta-shared
+spec:
+  selector:
+    app: phpldapadmin-container
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

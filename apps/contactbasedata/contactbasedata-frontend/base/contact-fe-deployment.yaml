@@ -14,8 +14,7 @@ spec:
         app: contact-fe-container
     spec: 
       containers: 
-        - 
-          image: "registry.gitlab.com/openkonsequenz/qa/contactbasedata-frontend:latest"
+        - image: "registry.gitlab.com/openkonsequenz/qa/contactbasedata-frontend:latest"
           name: contact-fe-container
           ports: 
             - containerPort: 80
@@ -23,7 +22,7 @@ spec:
             - name: config-volume
               mountPath: /usr/share/nginx/html/config/development.json
               subPath: development.json
-              readOnly: true      
+              readOnly: true
       volumes:
         - name: config-volume
           configMap:
@@ -44,5 +43,3 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
-      
- 

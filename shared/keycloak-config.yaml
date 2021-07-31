@@ -1,0 +1,32 @@
+apiVersion: v1
+data:
+  keycloak-config.json: "{\r\n  \"enabled\": true,\r\n  \"realm\": \"Elogbook\",\r\n
+    \ \"roles\": {\r\n    \"realm\": [\r\n\t  {\r\n        \"name\": \"kon-admin\",\r\n
+    \       \"composite\": false,\r\n        \"clientRole\": false\r\n      },\r\n
+    \     {\r\n        \"name\": \"kon-access\",\r\n        \"composite\": false,\r\n
+    \       \"clientRole\": false\r\n      },\r\n\t  {\r\n        \"name\": \"grid-failure-admin\",\r\n
+    \       \"composite\": false,\r\n        \"clientRole\": false\r\n      },\r\n
+    \     {\r\n        \"name\": \"grid-failure-access\",\r\n        \"composite\":
+    false,\r\n        \"clientRole\": false\r\n      },\r\n      {\r\n        \"name\":
+    \"view-realm-users\",\r\n        \"composite\": true,\r\n        \"composites\":
+    {\r\n          \"client\": {\r\n            \"realm-management\": [\r\n              \"view-users\"\r\n
+    \           ]\r\n          }\r\n        },\r\n        \"clientRole\": false\r\n
+    \     }\t  \r\n    ],\r\n    \"client\": {\r\n\t  \"elogbook-backend\": []\r\n
+    \   }\r\n  },\r\n  \"clients\": [\r\n\t{\r\n      \"clientId\": \"elogbook-backend\",\r\n
+    \     \"name\": \"elogbook-backend\",\r\n      \"description\": \"Elogbook-Backend\",\r\n
+    \     \"enabled\": true,\r\n      \"clientAuthenticatorType\": \"client-secret\",\r\n
+    \     \"redirectUris\": [\r\n        \"*\"\r\n      ],\r\n      \"webOrigins\":
+    [\r\n        \"*\"\r\n      ],\r\n\t  \"publicClient\": true,\r\n\t  \"standardFlowEnabled\":
+    true,      \r\n      \"directAccessGrantsEnabled\": true,\r\n\t  \"attributes\":
+    {\r\n\t\t  \"backchannel.logout.session.required\": \"true\"\r\n\t  }\t  \r\n
+    \   }\r\n  ],\r\n  \"users\": [\r\n    {\r\n      \"username\": \"admin\",\r\n
+    \     \"email\": \"admin@mail.de\",\r\n      \"enabled\": true,\r\n      \"firstName\":
+    \"Admin\",\r\n      \"lastName\": \"Istrator\",\r\n      \"realmRoles\": [\r\n
+    \       \"kon-access\",\r\n\t\t\"kon-admin\",\r\n\t\t\"grid-failure-admin\",\r\n\t\t\"grid-failure-access\",\r\n\t\t\"view-realm-users\"\r\n
+    \     ],\r\n      \"credentials\": [\r\n        {\r\n          \"type\": \"password\",\r\n
+    \         \"value\": \"admin\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}"
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: keycloak-config
+  namespace: ok-pta-qa-modules

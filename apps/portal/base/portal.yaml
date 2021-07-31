@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  namespace: ok-pta-qa-modules
+  name: portal-tomcat-deployment
+spec: 
+  selector: 
+    matchLabels: 
+      app: portal-tomcat
+  template: 
+    metadata: 
+      labels: 
+        app: portal-tomcat
+    spec: 
+      initContainers:
+        - name: wait-for-keycloak
+          image: busybox
+          command: ['sh', '-c', 'until nslookup keycloak-service.ok-pta-shared.svc.cluster.local; do echo waiting for keycloak; sleep 3; done;']        
+        - name: init-keycloak-config
+          image: adorsys/keycloak-config-cli:v4.0.1-14.0.0
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: KEYCLOAK_PASSWORD
+              value: admin
+            - name: KEYCLOAK_URL
+              value: http://keycloak-service.ok-pta-shared.svc.cluster.local:8080/auth
+            - name: KEYCLOAK_AVAILABILITYCHECK_ENABLED 
+              value: "true"
+            - name: KEYCLOAK_AVAILABILITYCHECK_TIMEOUT
+              value: "120s"
+            - name: IMPORT_FORCE
+              value: "false"          
+          volumeMounts:
+            - name: config-volume-keycloak
+              mountPath: /config/keycloak-config.json
+              subPath: keycloak-config.json                             
+      containers:        
+        - image: "registry.gitlab.com/openkonsequenz/qa/portal-build-job:latest"
+          imagePullPolicy: Always
+          name: portal-tomcat
+          env:        
+            - name: JAVA_TOOL_OPTIONS
+              value: "-agentlib:jdwp=transport=dt_socket,address=5000,server=y,suspend=n"
+          ports:
+            - containerPort: 5000
+              name: "jvm-debug"
+            - containerPort: 8080
+          volumeMounts:
+          - name: config-volume
+            mountPath: /configPortal/backendConfig.json
+            subPath: backendConfig.json
+          - name: config-volume
+            mountPath: /configPortal/moduleConfig.json
+            subPath: moduleConfig.json                    
+      volumes:
+        - name: config-volume
+          configMap:
+            name: portal-config
+        - name: config-volume-keycloak
+          configMap:
+            name: keycloak-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: ok-pta-qa-modules
+  name: portal-service
+spec:
+  selector:
+    app: portal-tomcat
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080

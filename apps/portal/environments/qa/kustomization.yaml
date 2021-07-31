@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../../base
+
+namespace: ok-pta-qa-modules
+
+images:
+  - name: registry.gitlab.com/openkonsequenz/qa/portal-build-job:latest
+    newName: registry.gitlab.com/openkonsequenz/qa/portal-build-job:latest
+
+configMapGenerator:
+  - name: portal-config
+    files:
+      - configs/backendConfig.json
+      - configs/moduleConfig.json

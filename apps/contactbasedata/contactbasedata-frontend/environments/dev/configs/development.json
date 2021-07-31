@@ -1,0 +1,33 @@
+{
+  "api": {
+    "baseUrl": "/api"
+  },
+
+  "paths": {
+    "imagesRoot": "/assets/images/",
+    "userImageFolder": "/assets/images/users/",
+    "portalLoginUrl": "http://ok-portal.com/portalFE/#/login"
+  },
+
+  "localization": {
+    "languages": [
+      {"code": "de", "name": "DE", "culture": "de-DE"},
+      {"code": "en", "name": "EN", "culture": "en-EN"}
+    ],
+    "defaultLanguage": "de"
+  },
+
+  "notifications": {
+    "options": {
+      "timeOut": 5000,
+      "showProgressBar": true,
+      "pauseOnHover": true,
+      "position": ["top", "right"],
+      "theClass": "sy-notification"
+    },
+    "unauthorizedEndpoints": [],
+    "notFoundEndpoints": []
+  },
+
+  "debugging": true
+}

@@ -1,0 +1,40 @@
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: spring-boot-admin-sa
+  labels:
+    app: spring-boot-admin
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: spring-boot-admin-role
+  labels:
+    app: spring-boot-admin
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - endpoints
+      - services
+    verbs:
+      - get
+      - list
+      - watch
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: spring-boot-admin-role-binding
+  namespace: ok-pta-qa-modules
+  labels:
+    app: spring-boot-admin
+subjects:
+  - kind: ServiceAccount
+    name: spring-boot-admin-sa
+    namespace: ok-pta-qa-modules
+roleRef:
+  apiGroup: ""
+  kind: Role
+  name: spring-boot-admin-role

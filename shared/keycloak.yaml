@@ -1,0 +1,98 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: keycloak-service
+  namespace: ok-pta-shared
+  labels:
+    app: keycloak
+spec:
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: keycloak
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak
+  namespace: ok-pta-shared
+  labels:
+    app: keycloak
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      initContainers:              
+        - name: init-db
+          image: postgres:9.6.22-alpine3.14
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: APP_DBNAME
+              value: keycloak  
+            - name: PGHOST
+              value: postgresql-svc.ok-pta-shared.svc.cluster.local
+            - name: PGUSER 
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql-secrets
+                  key: POSTGRES_DB_PASSWORD
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql-secrets
+                  key: POSTGRES_DB_PASSWORD       
+          command:
+          - /bin/sh
+          - -c
+          - >
+            echo Waiting for DB to be ready...;
+            while ! pg_isready >dev/null; do sleep 3; done;
+            echo DB is ready and accepting conncetions;
+            sleep 3;
+            echo Creating database ${APP_DBNAME} if not exists;
+            psql -tc "SELECT 1 FROM pg_database WHERE datname = '${APP_DBNAME}'" | grep -q 1 || psql -U postgres -c "CREATE DATABASE \"${APP_DBNAME}\"";
+            echo Job finished;        
+      containers:
+      - name: keycloak
+        image: quay.io/keycloak/keycloak:14.0.0
+        env:
+        - name: KEYCLOAK_USER
+          value: "admin"
+        - name: KEYCLOAK_PASSWORD
+          value: "admin"
+        - name: PROXY_ADDRESS_FORWARDING
+          value: "true"
+        - name: DB_VENDOR
+          value: "postgres"
+        - name: DB_DATABASE
+          value: "keycloak"
+        - name: DB_USER
+          value: "postgres"
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgresql-secrets
+              key: POSTGRES_DB_PASSWORD
+        - name: DB_ADDR
+          value: "postgresql-svc"
+        ports:
+        - name: http
+          containerPort: 8080
+        - name: https
+          containerPort: 8443
+        readinessProbe:
+          httpGet:
+            path: /auth/realms/master
+            port: 8080
+          initialDelaySeconds: 30
+          timeoutSeconds: 30

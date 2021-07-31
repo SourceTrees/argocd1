@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Kontaktstammdaten",
+    "cols": 1,
+    "rows": 1,
+    "color": "#ffffff",
+    "link": "http://contact-fe.com/",
+    "pictureLink": "assets/img/kontaktstammdaten_kachel.jpg",
+    "requiredRole": "kon-access"
+  },
+  {
+    "name": "Störungsinformationstool",
+    "cols": 1,
+    "rows": 1,
+    "color": "#ffffff",
+    "link": "http://sit-fe.com",
+    "pictureLink": "assets/img/stoerungsinformation_kachel.jpg",
+    "requiredRole": "grid-failure-access"
+  }
+]
