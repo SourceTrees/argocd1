@@ -12,7 +12,7 @@ apps:
     destNamespace: ok-pta-qa-modules        
     syncWave: 2
     path: apps/contactbasedata/contactbasedata-backend/environments/qa/
-  - name: contactbasedata-backend
+  - name: portal-tomcat
     destNamespace: ok-pta-qa-modules        
     syncWave: 2
     path: apps/portal/environments/qa/
