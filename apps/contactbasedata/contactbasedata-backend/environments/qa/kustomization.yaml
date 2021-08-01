@@ -7,9 +7,9 @@ bases:
   - ../../base
 
 images:
-  - name: "registry.gitlab.com/openkonsequenz/qa/contactbasedata-backend:develop"
-    newName: "registry.gitlab.com/openkonsequenz/qa/contactbasedata-backend:develop"
-    newTag: "latest"
+  - name: "registry.gitlab.com/openkonsequenz/qa/contactbasedata-backend"
+    newName: "registry.gitlab.com/openkonsequenz/qa/contactbasedata-backend"
+    newTag: "develop"
 
 configMapGenerator:
   - name: contact-be-config    
