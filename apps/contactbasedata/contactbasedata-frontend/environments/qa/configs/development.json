@@ -6,7 +6,7 @@
   "paths": {
     "imagesRoot": "/assets/images/",
     "userImageFolder": "/assets/images/users/",
-    "portalLoginUrl": "http://ok-portal.com/portalFE/#/login"
+    "portalLoginUrl": "http://ok-portal.de/portalFE/#/login"
   },
 
   "localization": {

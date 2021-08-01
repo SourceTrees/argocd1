@@ -4,7 +4,7 @@
     "cols": 1,
     "rows": 1,
     "color": "#ffffff",
-    "link": "http://contact-fe.com/",
+    "link": "http://contact-fe.de/",
     "pictureLink": "assets/img/kontaktstammdaten_kachel.jpg",
     "requiredRole": "kon-access"
   },
@@ -13,7 +13,7 @@
     "cols": 1,
     "rows": 1,
     "color": "#ffffff",
-    "link": "http://sit-fe.com",
+    "link": "http://sit-fe.de",
     "pictureLink": "assets/img/stoerungsinformation_kachel.jpg",
     "requiredRole": "grid-failure-access"
   }
