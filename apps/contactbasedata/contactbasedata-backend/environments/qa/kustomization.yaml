@@ -6,10 +6,10 @@ namespace: ok-pta-qa-modules
 bases:
   - ../../base
 
-images:
-  - name: "registry.gitlab.com/openkonsequenz/qa/contactbasedata-backend"
-    newName: "registry.gitlab.com/openkonsequenz/qa/contactbasedata-backend"
-    newTag: "develop"
+# images:
+#   - name: "registry.gitlab.com/openkonsequenz/qa/contactbasedata-backend"
+#     newName: "registry.gitlab.com/openkonsequenz/qa/contactbasedata-backend"
+#     newTag: "develop"
 
 configMapGenerator:
   - name: contact-be-config    
