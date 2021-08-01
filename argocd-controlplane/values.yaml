@@ -10,22 +10,22 @@ apps:
     path: shared/    
   - name: contactbasedata-backend
     destNamespace: ok-pta-qa-modules        
-    syncWave: 2
+    syncWave: 0
     path: apps/contactbasedata/contactbasedata-backend/environments/qa/
   - name: portal-tomcat
     destNamespace: ok-pta-qa-modules        
-    syncWave: 2
+    syncWave: 0
     path: apps/portal/environments/qa/
   # - name: contactbasedata-backend
   #   destNamespace: ok-pta-dev-modules
   #   path: contactbasedata-backend/environments/dev/
   - name: contactbasedata-frontend
     destNamespace: ok-pta-qa-modules
-    syncWave: 2
+    syncWave: 0
     path: apps/contactbasedata/contactbasedata-frontend/environments/qa/
   - name: traefik-config
     destNamespace: ok-pta-qa-modules        
-    syncWave: 2
+    syncWave: 0
     path: apps/ingress/environments/qa/
 
 spec:
