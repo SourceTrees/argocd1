@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: traefik
+  project: default
+  source:
+    chart: traefik
+    helm:
+      values: |
+        additionalArguments:
+          - "--accesslog=true"
+          - "--tracing.jaeger=true"
+          - "--tracing.jaeger.samplingServerURL=http://jaeger-agent.default.svc:5778/sampling"
+          - "--tracing.jaeger.localAgentHostPort=jaeger-agent.default.svc:6831"
+    repoURL: https://helm.traefik.io/traefik
+    targetRevision: 10.1.1
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

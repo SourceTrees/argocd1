@@ -37,11 +37,11 @@ spring:
   flyway:
     enabled: false
   ldap:
-    base: o=sevenSeas
-    username: uid=admin,ou=system
-    password: secret
-    port: 10389
-    urls: ldap://entopkon:10389
+    base: dc=sevenseas,dc=intern
+    username: cn=admin,dc=sevenseas,dc=intern
+    password: admin
+    port: 389
+    urls: ldap://open-ldap-service.ok-pta-shared.svc.cluster.local:389
 
 # oracle config --------------
 oracle:
@@ -64,7 +64,7 @@ ldap-sync:
     mail-id: 1
     telephone-number-id: 2
   scheduling:
-    enabled: false
+    enabled: true
     cron-expression: '0 0 0 * * ?'
 
 authnauth-sync:
