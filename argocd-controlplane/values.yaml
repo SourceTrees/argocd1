@@ -17,12 +17,16 @@ apps:
     syncWave: 2
     path: apps/portal/environments/qa/
   # - name: contactbasedata-backend
-  #   destNamespace: ok-pta-qa-modules
+  #   destNamespace: ok-pta-dev-modules
   #   path: contactbasedata-backend/environments/dev/
   - name: contactbasedata-frontend
     destNamespace: ok-pta-qa-modules
     syncWave: 2
     path: apps/contactbasedata/contactbasedata-frontend/environments/qa/
+  - name: traefik-config
+    destNamespace: ok-pta-qa-modules        
+    syncWave: 2
+    path: apps/ingress/environments/qa/
 
 spec:
   destination:

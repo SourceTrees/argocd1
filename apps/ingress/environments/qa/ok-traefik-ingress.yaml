@@ -1,0 +1,71 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:  
+  name: api-strip-prefix
+  namespace: ok-pta-qa-modules
+spec:  
+  stripPrefix:
+    prefixes:
+      - /api
+    #forceSlash: true
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ingress-routes-open-konsequenz
+  namespace: ok-pta-qa-modules
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`portal-ok.de`)
+      kind: Rule
+      services:
+        - name: portal-service
+          port: 80
+    - match: Host(`contact-fe.de`)
+      kind: Rule
+      services:
+        - name: contact-fe-service
+          port: 80
+    - match: Host(`contact-fe.de`) && PathPrefix(`/api`)
+      kind: Rule
+      middlewares:
+        - name: api-strip-prefix
+      services:
+        - name: contact-be-service
+          port: 9155
+    - match: Host(`table-app.de`)
+      kind: Rule
+      services:
+        - name: gfi-table-app-service
+          port: 80
+    - match: Host(`map-app.de`)
+      kind: Rule
+      services:
+        - name: gfi-map-app-service
+          port: 80
+    - match: Host(`webcomp-app.de`)
+      kind: Rule
+      services:
+        - name: gfi-webcomp-app-service
+          port: 80
+    - match: PathPrefix(`/public-settings`) || PathPrefix(`/public-sit`)
+      kind: Rule
+      services:
+        - name: gfi-web-cache-service
+          port: 3003
+    - kind: Rule
+      match: Host(`sit-fe.de`)
+      services:
+        - name: gfi-fe-service
+          port: 80
+    - kind: Rule
+      match: Host(`sit-fe.de`) && PathPrefix(`/api`)
+      middlewares:
+        - name: api-strip-prefix
+      services:
+        - name: gfi-be-service
+          port: 9165
