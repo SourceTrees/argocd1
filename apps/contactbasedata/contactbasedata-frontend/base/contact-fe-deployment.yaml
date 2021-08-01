@@ -14,7 +14,7 @@ spec:
         app: contact-fe-container
     spec: 
       containers: 
-        - image: "registry.gitlab.com/openkonsequenz/qa/contactbasedata-frontend:latest"
+        - image: registry.gitlab.com/openkonsequenz/qa/contactbasedata-frontend:latest
           name: contact-fe-container
           ports: 
             - containerPort: 80

@@ -7,8 +7,9 @@ bases:
 namespace: ok-pta-dev-modules
 
 images:
-  - name: registry.gitlab.com/openkonsequenz/qa/contactbasedata-frontend:latest
-    newName: registry.gitlab.com/openkonsequenz/dev/contactbasedata-frontend:latest
+  - name: registry.gitlab.com/openkonsequenz/qa/portal-build-job
+    newName: registry.gitlab.com/openkonsequenz/dev/portal-build-job
+    newTag: "latest"
 
 configMapGenerator:
   - name: portal-config

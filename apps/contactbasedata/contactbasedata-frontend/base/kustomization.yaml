@@ -3,4 +3,3 @@ kind: Kustomization
 
 resources:
   - contact-fe-deployment.yaml
-  #- contact-be-configmap.yaml

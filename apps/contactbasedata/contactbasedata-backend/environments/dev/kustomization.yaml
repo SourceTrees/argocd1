@@ -7,6 +7,11 @@ namespace: ok-pta-dev-modules
 bases:
   - ../../base
 
+images:
+  - name: "registry.gitlab.com/openkonsequenz/qa/contactbasedata-backend:develop"
+    newName: "registry.gitlab.com/openkonsequenz/dev/contactbasedata-backend:develop"
+    newTag: "latest"
+
 patchesStrategicMerge:  
   - contact-be-deployment.yaml
 configMapGenerator:

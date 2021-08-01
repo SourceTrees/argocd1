@@ -7,8 +7,9 @@ resources:
 namespace: ok-pta-qa-modules
 
 images:
-  - name: registry.gitlab.com/openkonsequenz/qa/contactbasedata-frontend:latest
-    newName: registry.gitlab.com/openkonsequenz/qa/contactbasedata-frontend:latest
+  - name: "registry.gitlab.com/openkonsequenz/qa/contactbasedata-frontend"
+    newName: "registry.gitlab.com/openkonsequenz/qa/contactbasedata-frontend"
+    newTag: "latest"
 
 configMapGenerator:
   - name: contact-fe-config   

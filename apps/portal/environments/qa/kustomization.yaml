@@ -7,8 +7,9 @@ resources:
 namespace: ok-pta-qa-modules
 
 images:
-  - name: registry.gitlab.com/openkonsequenz/qa/portal-build-job:latest
-    newName: registry.gitlab.com/openkonsequenz/qa/portal-build-job:latest
+  - name: registry.gitlab.com/openkonsequenz/qa/portal-build-job
+    newName: registry.gitlab.com/openkonsequenz/qa/portal-build-job
+    newTag: "latest"
 
 configMapGenerator:
   - name: portal-config
